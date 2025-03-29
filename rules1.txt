@@ -1,0 +1,51 @@
+%---predecesor------------------------------------------
+
+parent(khaled, mahmoud).
+parent(khaled, hana).
+parent(kamel, khaled).
+parent(kamel, saher).
+
+predecesor(X, Y) :- parent(X, Y).
+predecesor(X, Y) :- parent(X, Z), predecesor(Z, Y).
+
+%---has Integer Argument---------------------------------
+
+hasIntArg(Exp):- Exp = f(X), integer(X).
+hasIntArg(Exp):- Exp = f(X), hasIntArg(X).
+	
+%---Normal Power---------top down------------------------
+
+power(X, Y, R):- Y = 0, R = 1.
+power(X, Y, R):- NewY is Y-1, power(X, NewY, NewR), R is X*NewR.
+
+%---Tail Power-----------bottom up-----------------------
+
+tailpower(_, 0, Box, R):- R = Box.
+tailpower(X, Y, Box, R):- NewY is Y-1, NewBox is X * Box, tailpower(X, NewY, NewBox, R).
+
+%---fib----------------------------------------------------
+
+fib(0, 1).
+fib(1, 1).
+
+fib(X, R):-  NewX1 is X-1,
+             NewX2 is X-2,
+
+             fib(NewX1, NewR1), 
+             fib(NewX2, NewR2),
+
+	     R is NewR1 + NewR2.
+
+%---Normal fact----------top down---------------------------
+
+fact(0, 1).
+
+fact(X, R):- NewX is X-1, fact(NewX, NewR), R is X*NewR.
+
+%---tail fact----------bottom up---------------------------
+
+tailfact(0, Box, Box).
+
+tailfact(X, Box, R):- NewX is X-1, NewBox is X*Box, tailfact(NewX, NewBox, R).
+
+%---------------------------------------------------------
