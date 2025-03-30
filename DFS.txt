@@ -1,0 +1,24 @@
+member([H|T], Targ):- H = Targ.
+member([H|T], Targ):- member(T, Targ).
+
+pushfront([H|T], E, R):- R = [E|[H|T]], \+member([H|T], E).
+
+dfs(CurrentState, Visited, GoalState) :-
+    CurrentState = GoalState, !,
+    write("Done"), nl, write(Visited).
+
+dfs(CurrentState, Visited, GoalState) :-
+    move(CurrentState, NextState),
+    \+ member(Visited, NextState), % Corrected member check
+    NewVisited = [CurrentState | Visited], % Corrected visited list update
+    dfs(NextState, NewVisited, GoalState).
+
+
+% states
+%[dirty, dirty, 2], [clean, clean, _]
+
+move([X, Y, 1, _], [X, Y, 2, jumpto2]).
+move([X, Y, 2, _], [X, Y, 1, jumpto1]).
+
+move([dirty, Y, 1, _], [clean, Y, 1, clean1]).
+move([X, dirty, 2, _], [X, clean, 2, clean2]).

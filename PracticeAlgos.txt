@@ -48,4 +48,103 @@ tailfact(0, Box, Box).
 
 tailfact(X, Box, R):- NewX is X-1, NewBox is X*Box, tailfact(NewX, NewBox, R).
 
-%---------------------------------------------------------
+%---List tail sum-------------------------------------------
+
+tailsum([H|[]], Box, R):- R is Box + H.
+
+tailsum([H|T], Box, R):- NewBox is Box + H, tailsum(T, NewBox, R).
+
+%---index of / Element at-----------------------------------
+
+elementAt([H|[]], Targ, Box, R):- R = -1.
+elementAt([H|T], Targ, Box, R):- H = Targ, R = Box.
+elementAt([H|T], Targ, Box, R):- Box = Targ, R = H.
+
+elementAt([H|T], Targ, Box, R):- NewBox is Box + 1, elementAt(T, Targ, NewBox, R).
+
+%--member in list------------------------------------------
+
+member([H|T], Targ):- H = Targ.
+member([H|T], Targ):- member(T, Targ).
+
+
+%---push front----------------------------------------------
+
+pushfront([H|T], E, R):- R = [E|[H|T]], \+member([H|T], E).
+
+%---pop front-----------------------------------------------
+
+popfront([H|T], R):- R = T.
+
+%---remove duplicates--------------------------------------         ===*VIP*===
+
+remDub([], R):- R = [].
+
+remDub([H|T], R):- member(T, H), remDub(T, R).
+remDub([H|T], [H|TailR]):- remDub(T, TailR).
+
+%----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
